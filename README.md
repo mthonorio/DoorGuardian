@@ -25,8 +25,8 @@ O **DoorGuardian** é um aplicativo mobile que funciona em conjunto com um módu
 
 ### Mobile App
 
-- **React Native** `0.79.5` - Framework principal
-- **Expo** `~53.0.6` - Plataforma de desenvolvimento
+- **React Native** `0.81.4` - Framework principal
+- **Expo** `~54.0.0` - Plataforma de desenvolvimento
 - **Expo Router** - Sistema de navegação
 - **TypeScript** - Tipagem estática
 - **NativeWind** - Estilização com Tailwind CSS
@@ -39,11 +39,13 @@ O **DoorGuardian** é um aplicativo mobile que funciona em conjunto com um módu
 
 ## 📋 Pré-requisitos
 
-- **Node.js** (versão 18 ou superior)
+- **Node.js** (versão 20.19.4 ou superior)
 - **npm** ou **yarn**
-- **Expo CLI** instalado globalmente
+- **@expo/cli** (será instalado automaticamente)
 - **Android Studio** (para desenvolvimento Android) ou **Xcode** (para iOS)
 - Dispositivo físico ou emulador para testes
+- **Expo Go** app no dispositivo móvel (para testes rápidos)
+- **ESP32-CAM** e **Arduino IDE** (para hardware)
 
 ## 🚀 Instalação e Configuração
 
@@ -65,38 +67,57 @@ yarn install
 ### 3. Configure o ambiente de desenvolvimento
 
 ```bash
-# Instale o Expo CLI se ainda não tiver
-npm install -g @expo/cli
+# Verifique se tem a versão correta do Node.js (20.19.4+)
+node --version
 
-# Verifique a instalação
-expo --version
+# Se não tiver, instale usando nvm (recomendado):
+# curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
+# nvm install 20.19.4
+# nvm use 20.19.4
+# nvm alias default 20.19.4
+
+# Verifique a instalação do Expo
+npx expo --version
 ```
 
-### 4. Execute o aplicativo
+### 4. Configure a ESP32-CAM (Hardware)
 
-#### Para desenvolvimento
+📖 **[Ver guia completo de configuração da ESP32-CAM](ESP32-SETUP.md)**
+
+**Resumo rápido:**
+1. Instale o Arduino IDE
+2. Configure as bibliotecas ESP32
+3. Carregue o código `esp32-cam-code.cpp` na ESP32-CAM
+4. Configure seu WiFi no código
+5. Anote o IP da ESP32-CAM
+6. Atualize o IP no arquivo `components/CameraStream.tsx`
+
+```tsx
+// No arquivo components/CameraStream.tsx
+esp32Ip="192.168.1.100" // ← Substitua pelo IP da sua ESP32-CAM
+```
+
+### 5. Inicie o aplicativo
 
 ```bash
-npm start
-# ou
-expo start
+# Entre na pasta do projeto
+cd DoorGuardian
+
+# Instale as dependências
+yarn install
+
+# Inicie o servidor de desenvolvimento
+npx expo start
 ```
 
-#### Para Android
+### 6. Teste a integração
 
-```bash
-npm run android
-# ou
-expo run:android
-```
+1. **Camera Stream**: Verifique se a imagem da ESP32-CAM aparece no app
+2. **Controles da Porta**: Teste os botões de abrir/fechar porta
+3. **Status**: Monitore a conexão com a ESP32-CAM
+4. **Captura de Foto**: Use o botão para tirar fotos pelo app
 
-#### Para iOS
-
-```bash
-npm run ios
-# ou
-expo run:ios
-```
+> **Nota**: A ESP32-CAM deve estar ligada e conectada à mesma rede WiFi do seu dispositivo móvel para funcionar corretamente.
 
 ## 📁 Estrutura do Projeto
 
