@@ -244,10 +244,12 @@ void handleCapture() {
 
 Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
 
-## 👨‍💻 Desenvolvedor
+## 👨‍💻 Desenvolvedores
 
 **Matheus Honório** - [@mthonorio](https://github.com/mthonorio)
+
 **Victoria Monteiro** - [@Vmp309](https://github.com/Vmp309)
+
 **Rayque Alencar** - [@rayque-alencar](https://github.com/rayque-alencar)
 
 ## 📞 Suporte
