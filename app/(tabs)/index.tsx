@@ -173,6 +173,7 @@ const styles = StyleSheet.create({
   header: {
     alignItems: 'center',
     marginBottom: 30,
+    marginTop: 30,
   },
   title: {
     fontSize: 28,
