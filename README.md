@@ -354,7 +354,7 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para ma
 ## 📞 Suporte
 
 - 🐛 **Issues**: [GitHub Issues](https://github.com/mthonorio/DoorGuardian/issues)
-- 📧 **Email**: seu.email@exemplo.com
+- 📧 **Email**: matheus0honorio@gmail.com
 - 💬 **Discussões**: [GitHub Discussions](https://github.com/mthonorio/DoorGuardian/discussions)
 
 ---
