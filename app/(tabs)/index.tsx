@@ -1,11 +1,6 @@
 import { Stack } from 'expo-router';
 import * as React from 'react';
-import {
-  View,
-  Alert,
-  StyleSheet,
-  TouchableOpacity,
-} from 'react-native';
+import { View, Alert, StyleSheet, TouchableOpacity } from 'react-native';
 
 import { Icon } from '@roninoss/icons';
 
@@ -19,51 +14,38 @@ export default function Home() {
   const [cameraConnected, setCameraConnected] = React.useState(false);
 
   const handleOpenDoor = () => {
-    Alert.alert(
-      'Abrir Porta',
-      'Deseja realmente abrir a porta?',
-      [
-        { text: 'Cancelar', style: 'cancel' },
-        { 
-          text: 'Abrir', 
-          style: 'destructive',
-          onPress: () => {
-            // Aqui você implementará a lógica para abrir a porta
-            console.log('Porta aberta!');
-            Alert.alert('Sucesso', 'Porta aberta com sucesso!');
-          }
+    Alert.alert('Abrir Porta', 'Deseja realmente abrir a porta?', [
+      { text: 'Cancelar', style: 'cancel' },
+      {
+        text: 'Abrir',
+        style: 'destructive',
+        onPress: () => {
+          // Aqui você implementará a lógica para abrir a porta
+          console.log('Porta aberta!');
+          Alert.alert('Sucesso', 'Porta aberta com sucesso!');
         },
-      ]
-    );
+      },
+    ]);
   };
 
   const handleLockDoor = () => {
-    Alert.alert(
-      'Travar Tranca',
-      'Deseja travar a tranca da porta?',
-      [
-        { text: 'Cancelar', style: 'cancel' },
-        { 
-          text: 'Travar', 
-          onPress: () => {
-            // Aqui você implementará a lógica para travar a tranca
-            console.log('Tranca travada!');
-            Alert.alert('Sucesso', 'Tranca travada com sucesso!');
-          }
+    Alert.alert('Travar Tranca', 'Deseja travar a tranca da porta?', [
+      { text: 'Cancelar', style: 'cancel' },
+      {
+        text: 'Travar',
+        onPress: () => {
+          // Aqui você implementará a lógica para travar a tranca
+          console.log('Tranca travada!');
+          Alert.alert('Sucesso', 'Tranca travada com sucesso!');
         },
-      ]
-    );
+      },
+    ]);
   };
 
   return (
     <>
       <Stack.Screen options={{ title: 'DoorGuardian', headerShown: false }} />
-      <View 
-        style={[
-          styles.container,
-          { backgroundColor: isDark ? '#000000' : '#ffffff' }
-        ]}
-      >
+      <View style={[styles.container, { backgroundColor: isDark ? '#000000' : '#ffffff' }]}>
         {/* Header */}
         <View style={styles.header}>
           <Text style={[styles.title, { color: isDark ? '#ffffff' : '#000000' }]}>
@@ -76,8 +58,8 @@ export default function Home() {
 
         {/* Camera Stream Area */}
         <View style={styles.cameraWrapper}>
-          <CameraStream 
-            esp32Ip="192.168.1.100" // Substitua pelo IP da sua ESP32-CAM
+          <CameraStream
+            esp32Ip="192.168.0.8" // Substitua pelo IP da sua ESP32-CAM
             isDark={isDark}
             onStatusChange={setCameraConnected}
           />
@@ -86,21 +68,19 @@ export default function Home() {
         {/* Control Buttons */}
         <View style={styles.buttonsContainer}>
           {/* Open Door Button */}
-          <TouchableOpacity 
+          <TouchableOpacity
             style={[styles.button, styles.openButton]}
             onPress={handleOpenDoor}
-            activeOpacity={0.8}
-          >
+            activeOpacity={0.8}>
             <Icon name="key" size={24} color="#ffffff" />
             <Text style={styles.buttonText}>Abrir Porta</Text>
           </TouchableOpacity>
 
           {/* Lock Door Button */}
-          <TouchableOpacity 
+          <TouchableOpacity
             style={[styles.button, styles.lockButton]}
             onPress={handleLockDoor}
-            activeOpacity={0.8}
-          >
+            activeOpacity={0.8}>
             <Icon name="lock" size={24} color="#ffffff" />
             <Text style={styles.buttonText}>Travar Tranca</Text>
           </TouchableOpacity>
@@ -108,58 +88,31 @@ export default function Home() {
 
         {/* Quick Actions */}
         <View style={styles.quickActions}>
-          <TouchableOpacity style={[
-            styles.quickAction,
-            { backgroundColor: isDark ? '#1a1a1a' : '#f5f5f5' }
-          ]}>
-            <Icon 
-              name="clock" 
-              size={20} 
-              color={isDark ? '#ffffff' : '#000000'} 
-            />
-            <Text style={[
-              styles.quickActionText,
-              { color: isDark ? '#ffffff' : '#000000' }
-            ]}>
+          <TouchableOpacity
+            style={[styles.quickAction, { backgroundColor: isDark ? '#1a1a1a' : '#f5f5f5' }]}>
+            <Icon name="clock" size={20} color={isDark ? '#ffffff' : '#000000'} />
+            <Text style={[styles.quickActionText, { color: isDark ? '#ffffff' : '#000000' }]}>
               Histórico
             </Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={[
-            styles.quickAction,
-            { backgroundColor: isDark ? '#1a1a1a' : '#f5f5f5' }
-          ]}>
-            <Icon 
-              name="cog" 
-              size={20} 
-              color={isDark ? '#ffffff' : '#000000'} 
-            />
-            <Text style={[
-              styles.quickActionText,
-              { color: isDark ? '#ffffff' : '#000000' }
-            ]}>
+          <TouchableOpacity
+            style={[styles.quickAction, { backgroundColor: isDark ? '#1a1a1a' : '#f5f5f5' }]}>
+            <Icon name="cog" size={20} color={isDark ? '#ffffff' : '#000000'} />
+            <Text style={[styles.quickActionText, { color: isDark ? '#ffffff' : '#000000' }]}>
               Configurações
             </Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={[
-            styles.quickAction,
-            { backgroundColor: isDark ? '#1a1a1a' : '#f5f5f5' }
-          ]}>
-            <Icon 
-              name="bell" 
-              size={20} 
-              color={isDark ? '#ffffff' : '#000000'} 
-            />
-            <Text style={[
-              styles.quickActionText,
-              { color: isDark ? '#ffffff' : '#000000' }
-            ]}>
+          <TouchableOpacity
+            style={[styles.quickAction, { backgroundColor: isDark ? '#1a1a1a' : '#f5f5f5' }]}>
+            <Icon name="bell" size={20} color={isDark ? '#ffffff' : '#000000'} />
+            <Text style={[styles.quickActionText, { color: isDark ? '#ffffff' : '#000000' }]}>
               Notificações
             </Text>
           </TouchableOpacity>
         </View>
-        </View>
+      </View>
     </>
   );
 }

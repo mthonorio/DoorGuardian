@@ -3,12 +3,14 @@
 ## 📋 **Pré-requisitos**
 
 ### Hardware:
+
 - **ESP32-CAM** (AI-Thinker)
 - **Cabo USB para programação**
 - **Jumpers** para conexão
 - **Fonte 5V** (recomendado)
 
 ### Software:
+
 - **Arduino IDE** 1.8.x ou superior
 - **ESP32 Board Manager**
 - **Bibliotecas necessárias**
@@ -83,11 +85,11 @@ const char* password = "SUA_SENHA_WIFI_AQUI";   // ← Substitua
 1. **Abra o Monitor Serial** (Ctrl+Shift+M)
 2. **Configure para 115200 baud**
 3. **Pressione RESET** na ESP32-CAM
-4. **Anote o IP** que aparecer (ex: 192.168.1.100)
+4. **Anote o IP** que aparecer (ex: 192.168.0.8)
 
 ```
 WiFi conectado
-Endereço IP da câmera: 192.168.1.100  ← Este é o IP!
+Endereço IP da câmera: 192.168.0.8  ← Este é o IP!
 Servidor iniciado
 ```
 
@@ -96,14 +98,14 @@ Servidor iniciado
 No arquivo `/components/CameraStream.tsx`, altere:
 
 ```tsx
-esp32Ip="192.168.1.100" // ← Coloque o IP da sua ESP32-CAM aqui
+esp32Ip = '192.168.0.8'; // ← Coloque o IP da sua ESP32-CAM aqui
 ```
 
 Ou na tela principal `/app/(tabs)/index.tsx`:
 
 ```tsx
-<CameraStream 
-  esp32Ip="192.168.1.100" // ← Substitua pelo IP real
+<CameraStream
+  esp32Ip="192.168.0.8" // ← Substitua pelo IP real
   isDark={isDark}
   onStatusChange={setCameraConnected}
 />
@@ -112,28 +114,31 @@ Ou na tela principal `/app/(tabs)/index.tsx`:
 ## 🧪 **Testar Conexão**
 
 ### **1. Teste no Navegador:**
+
 - Acesse: `http://SEU_IP_ESP32/`
 - Deve aparecer: "ESP32-CAM DoorGuardian"
 - Teste o stream: `http://SEU_IP_ESP32/stream`
 - Teste captura: `http://SEU_IP_ESP32/capture`
 
 ### **2. Teste no App:**
+
 - Inicie o app React Native
 - Se conectado, deve aparecer o stream da câmera
 - Status deve mostrar "Conectado" em verde
 
 ## 📡 **Endpoints Disponíveis**
 
-| Endpoint | Método | Descrição |
-|----------|--------|-----------|
-| `/` | GET | Página inicial |
-| `/stream` | GET | Stream de vídeo ao vivo |
-| `/capture` | GET | Captura uma foto |
-| `/status` | GET | Status da câmera (JSON) |
+| Endpoint   | Método | Descrição               |
+| ---------- | ------ | ----------------------- |
+| `/`        | GET    | Página inicial          |
+| `/stream`  | GET    | Stream de vídeo ao vivo |
+| `/capture` | GET    | Captura uma foto        |
+| `/status`  | GET    | Status da câmera (JSON) |
 
 ## 🔧 **Troubleshooting**
 
 ### **ESP32-CAM não conecta no WiFi:**
+
 ```cpp
 // Adicione debug no código:
 Serial.begin(115200);
@@ -146,6 +151,7 @@ while (WiFi.status() != WL_CONNECTED) {
 ```
 
 ### **Câmera não inicializa:**
+
 ```cpp
 // Verifique se PSRAM está disponível:
 if(!psramFound()){
@@ -157,6 +163,7 @@ if(!psramFound()){
 ```
 
 ### **Stream não carrega no app:**
+
 1. **Verifique o IP** da ESP32-CAM
 2. **Teste no navegador** primeiro
 3. **Verifique a rede WiFi** (mesmo WiFi do celular)
@@ -164,6 +171,7 @@ if(!psramFound()){
 5. **Reinicie a ESP32-CAM**
 
 ### **Erro CORS:**
+
 ```cpp
 // Já está configurado no código:
 server.sendHeader("Access-Control-Allow-Origin", "*");
@@ -181,6 +189,7 @@ server.enableCORS(true);
 ## 🆘 **Suporte**
 
 Se tiver problemas, verifique:
+
 - [ ] ESP32-CAM está alimentada (LED vermelho aceso)
 - [ ] WiFi configurado corretamente
 - [ ] IP correto no app

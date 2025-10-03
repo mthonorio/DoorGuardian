@@ -64,7 +64,18 @@ npm install
 yarn install
 ```
 
-### 3. Configure o ambiente de desenvolvimento
+### 3. Configure as variáveis de ambiente
+
+```bash
+# Copie o arquivo de exemplo
+cp .env.example .env
+
+# Edite o arquivo .env com suas configurações
+EXPO_PUBLIC_API_URL=http://SEU_SERVIDOR:3000
+EXPO_PUBLIC_ESP32_IP=192.168.0.8
+```
+
+### 4. Configure o ambiente de desenvolvimento
 
 ```bash
 # Verifique se tem a versão correta do Node.js (20.19.4+)
@@ -85,6 +96,7 @@ npx expo --version
 📖 **[Ver guia completo de configuração da ESP32-CAM](ESP32-SETUP.md)**
 
 **Resumo rápido:**
+
 1. Instale o Arduino IDE
 2. Configure as bibliotecas ESP32
 3. Carregue o código `esp32-cam-code.cpp` na ESP32-CAM
@@ -94,7 +106,7 @@ npx expo --version
 
 ```tsx
 // No arquivo components/CameraStream.tsx
-esp32Ip="192.168.1.100" // ← Substitua pelo IP da sua ESP32-CAM
+esp32Ip = '192.168.0.8'; // ← Substitua pelo IP da sua ESP32-CAM
 ```
 
 ### 5. Inicie o aplicativo
@@ -211,6 +223,72 @@ void handleCapture() {
   }
 }
 ```
+
+## 🌐 API Backend
+
+O aplicativo se conecta a uma API backend para salvar e recuperar o histórico de capturas. A API deve implementar o seguinte endpoint:
+
+### Endpoints da API
+
+#### `GET /api/v1/history`
+
+Retorna o histórico de registros de acesso.
+
+**Response:**
+
+```json
+{
+  "access_records": [
+    {
+      "access": true,
+      "date": "2025-09-28T05:36:04.811000Z",
+      "id": "11471100-b297-441c-9d12-2d56b5f432a8",
+      "image_id": "0c07ef04-f88b-416d-8d3d-ec967e7f8cbd",
+      "image_url": "https://example.supabase.co/storage/v1/object/public/images/access_images/image.png",
+      "created_at": "2025-09-28T05:09:46.016405Z",
+      "updated_at": "2025-09-28T05:09:46.016410Z",
+      "image": {
+        "filename": "image.png",
+        "original_filename": "Generated Image.png",
+        "file_size": 1916566,
+        "mime_type": "image/png",
+        "id": "0c07ef04-f88b-416d-8d3d-ec967e7f8cbd",
+        "file_path": "access_images/image.png",
+        "created_at": "2025-09-28T05:09:45.415933Z",
+        "updated_at": "2025-09-28T05:09:45.415933Z"
+      }
+    }
+  ],
+  "pagination": {
+    "page": 1,
+    "per_page": 20,
+    "total": 1,
+    "pages": 1,
+    "has_next": false,
+    "has_prev": false,
+    "next_num": null,
+    "prev_num": null
+  }
+}
+```
+
+**Campos importantes:**
+
+- `access`: Indica se o acesso foi permitido (true) ou negado (false)
+- `date`: Data/hora do registro de acesso em ISO 8601
+- `image_url`: URL da imagem capturada no momento do acesso
+- `image.original_filename`: Nome original da imagem
+- `pagination`: Informações de paginação para navegar pelos registros
+
+### Configuração da API
+
+1. Configure a variável de ambiente `EXPO_PUBLIC_API_URL` no arquivo `.env`
+2. A API deve aceitar requisições CORS para o domínio do app
+3. As imagens devem estar acessíveis publicamente ou com autenticação adequada
+
+### Fallback para Desenvolvimento
+
+Se a API não estiver disponível, o app exibirá dados mock para facilitar o desenvolvimento e testes da interface.
 
 ## 📱 Funcionalidades Planejadas
 

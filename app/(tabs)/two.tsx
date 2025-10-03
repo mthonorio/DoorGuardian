@@ -8,6 +8,24 @@ import { ImageViewerModal } from '../../components/ImageViewerModal';
 import { ImageCapture } from '../../types/history';
 import { useColorScheme } from '../../lib/useColorScheme';
 
+const testAPI = async () => {
+  try {
+    const response = await fetch(
+      'https://door-guardian-backend-3lextkk65-mthonorios-projects.vercel.app/api/v1/history',
+      {
+        headers: {
+          accept: 'application/json',
+        },
+      }
+    );
+    console.log('Teste API Status:', response.status);
+    const data = await response.json();
+    console.log('Teste API Data:', data);
+  } catch (error) {
+    console.log('Teste API Error:', error);
+  }
+};
+
 export default function HistoryScreen() {
   const { colorScheme } = useColorScheme();
   const isDark = colorScheme === 'dark';
@@ -17,9 +35,11 @@ export default function HistoryScreen() {
     captures,
     filters,
     isLoading,
+    error,
     loadHistory,
     removeCapture,
     applyFilters,
+    clearError,
   } = useHistoryStore();
 
   const [selectedCapture, setSelectedCapture] = useState<ImageCapture | null>(null);
@@ -27,7 +47,19 @@ export default function HistoryScreen() {
 
   useEffect(() => {
     loadHistory();
+    testAPI();
   }, []);
+
+  useEffect(() => {
+    if (error) {
+      Alert.alert('Erro de Conexão', error + '\n\nExibindo dados de exemplo.', [
+        {
+          text: 'OK',
+          onPress: clearError,
+        },
+      ]);
+    }
+  }, [error]);
 
   const handleRefresh = async () => {
     setRefreshing(true);
